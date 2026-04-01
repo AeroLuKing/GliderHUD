@@ -4,38 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glider Flight Project HUD Simulator</title>
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- Correct CSS path -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+
+    <!-- Flight JSON loader -->
+    <script src="js/loadFlight.js"></script>
+
+    <!-- Main App -->
+    <script src="js/app.js" defer></script>
 </head>
+
 <body>
+
     <header>
         <h1>Glider Flight Project HUD Simulator</h1>
     </header>
+
     <main>
+
+        <!-- Upload Section -->
         <section id="upload-section">
-            <h2>Upload Your Flight Data</h2>
-            <input type="file" id="file-upload" />
-            <button id="upload-button">Upload</button>
+            <h2>Upload Your Flight JSON</h2>
+            <input type="file" id="fileInput" accept=".json">
+            <label for="fileInput" id="uploadLabel">Choose File</label>
         </section>
+
+        <!-- HUD Elements -->
         <section id="hud-elements">
-            <div class="hud-element" id="altitude">Altitude: <span id="altitude-value">0</span> ft</div>
-            <div class="hud-element" id="g-load">G-Load: <span id="g-load-value">0</span> G</div>
-            <div class="hud-element" id="airspeed">Airspeed: <span id="airspeed-value">0</span> knots</div>
-            <div class="hud-element" id="roll">Roll: <span id="roll-value">0</span> degrees</div>
-            <div class="hud-element" id="pitch">Pitch: <span id="pitch-value">0</span> degrees</div>
-            <div class="hud-element" id="heading">Heading: <span id="heading-value">0</span> degrees</div>
+            <div class="hud-element" id="hud-alt">Altitude: --- ft</div>
+            <div class="hud-element" id="hud-g">G-Load: --- G</div>
+            <div class="hud-element" id="hud-gs">GS: --- mph</div>
+            <div class="hud-element" id="hud-roll">Roll: ---°</div>
+            <div class="hud-element" id="hud-pitch">Pitch: ---°</div>
+            <div class="hud-element" id="hud-head">Heading: ---°</div>
         </section>
-        <section id="attitude-indicator">
-            <h2>Attitude Indicator</h2>
-            <div id="pitch-ladder">Pitch Ladder</div>
-            <div id="attitude-display"></div>
-        </section>
+
+        <!-- Three.js canvas container -->
+        <div id="canvas-container"></div>
+
+        <!-- Mini Attitude Indicator -->
+        <div id="attitude-indicator">
+            <!-- Bank pointer -->
+            <div id="bank-pointer"></div>
+
+            <!-- Center wings (pitch motion) -->
+            <div id="ai-wings"></div>
+
+            <!-- Fixed pitch ladder markings -->
+            <div class="pitch-line" style="top:20%;">+20°</div>
+            <div class="pitch-line" style="top:30%;">+10°</div>
+            <div class="pitch-line" style="top:50%;">0°</div>
+            <div class="pitch-line" style="top:70%;">-10°</div>
+            <div class="pitch-line" style="top:80%;">-20°</div>
+        </div>
+
+        <!-- Playback Controls -->
         <section id="timeline-controls">
             <h2>Timeline Controls</h2>
-            <button id="play-button">Play</button>
-            <button id="pause-button">Pause</button>
-            <input type="range" id="timeline-slider" min="0" max="100" value="0" />
+            <button id="btnPlay">Play</button>
+            <button id="btnPause">Pause</button>
+            <input type="range" id="slider" min="0" max="1" value="0">
+            <span id="timeDisplay">00:00.00</span>
         </section>
+
     </main>
-    <script src="script.js"></script>
+
 </body>
 </html>
