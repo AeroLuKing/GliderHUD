@@ -6,15 +6,15 @@
     <title>Glider Flight Project HUD Simulator</title>
 
     <!-- Correct CSS path -->
-    css/style.css
+    <link rel="stylesheet" href="css/style.css">
 
-    <!-- Three.js from CDN -->
-    https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js
+    <!-- Three.js from CDN (correct script tag!) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
 
     <!-- Flight JSON loader -->
-    js/loadFlight.js</script>
+    <script src="js/loadFlight.js"></script>
 
-    <!-- Main WebGL HUD application -->
+    <!-- Main WebGL app -->
     <script src="js/app.js"></script>
 </head>
 
@@ -34,12 +34,12 @@
 
         <!-- HUD Elements -->
         <section id="hud-elements">
-            <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
-            <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
-            <div id="hud-gs"    class="hud-element">GS: --- mph</div>
-            <div id="hud-roll"  class="hud-element">Roll: ---°</div>
+            <div id="hud-alt" class="hud-element">Altitude: --- ft</div>
+            <div id="hud-g" class="hud-element">G‑Load: --- G</div>
+            <div id="hud-gs" class="hud-element">GS: --- mph</div>
+            <div id="hud-roll" class="hud-element">Roll: ---°</div>
             <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
-            <div id="hud-head"  class="hud-element">Heading: ---°</div>
+            <div id="hud-head" class="hud-element">Heading: ---°</div>
         </section>
 
         <!-- WebGL Canvas -->
@@ -50,7 +50,7 @@
             <div id="bank-pointer"></div>
             <div id="ai-wings"></div>
 
-            <!-- Static pitch ladder text -->
+            <!-- Static pitch ladder -->
             <div class="pitch-line" style="top:20%;">+20°</div>
             <div class="pitch-line" style="top:30%;">+10°</div>
             <div class="pitch-line" style="top:50%;">0°</div>
@@ -58,7 +58,7 @@
             <div class="pitch-line" style="top:80%;">‑20°</div>
         </div>
 
-        <!-- Playback Controls -->
+        <!-- Timeline Controls -->
         <section id="timeline-controls">
             <h2>Timeline Controls</h2>
             <button id="btnPlay">Play</button>
@@ -66,8 +66,8 @@
             <input type="range" id="slider" min="0" max="1" value="0">
             <span id="timeDisplay">00:00.00</span>
         </section>
+
     </main>
 
 </body>
 </html>
-``
