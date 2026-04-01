@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glider Flight Project HUD Simulator</title>
 
-    <!-- Correct CSS -->
+    <!-- Local CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Three.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+    <!-- Local Three.js (DO NOT USE CDN) -->
+    <script src="js/three.min.js"></script>
 
-    <!-- Load Flight JSON Helper -->
+    <!-- Load Flight JSON Parser -->
     <script src="js/loadFlight.js"></script>
 
-    <!-- Main WebGL HUD Logic -->
+    <!-- Main WebGL HUD App -->
     <script src="js/app.js"></script>
 </head>
 
@@ -32,32 +32,33 @@
         <input type="file" id="fileInput" accept=".json">
     </section>
 
-    <!-- HUD Elements -->
+    <!-- HUD Values -->
     <section id="hud-elements">
-        <div id="hud-alt" class="hud-element">Altitude: --- ft</div>
-        <div id="hud-g" class="hud-element">G‑Load: --- G</div>
-        <div id="hud-gs" class="hud-element">GS: --- mph</div>
-        <div id="hud-roll" class="hud-element">Roll: ---°</div>
+        <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
+        <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
+        <div id="hud-gs"    class="hud-element">GS: --- mph</div>
+        <div id="hud-roll"  class="hud-element">Roll: ---°</div>
         <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
-        <div id="hud-head" class="hud-element">Heading: ---°</div>
+        <div id="hud-head"  class="hud-element">Heading: ---°</div>
     </section>
 
-    <!-- 3D Canvas -->
+    <!-- WebGL Canvas -->
     <div id="canvas-container"></div>
 
-    <!-- Attitude Indicator -->
+    <!-- Mini Attitude Indicator -->
     <div id="attitude-indicator">
         <div id="bank-pointer"></div>
         <div id="ai-wings"></div>
 
+        <!-- Pitch ladder -->
         <div class="pitch-line" style="top:20%;">+20°</div>
         <div class="pitch-line" style="top:30%;">+10°</div>
         <div class="pitch-line" style="top:50%;">0°</div>
-        <div class="pitch-line" style="top:70%;">-10°</div>
-        <div class="pitch-line" style="top:80%;">-20°</div>
+        <div class="pitch-line" style="top:70%;">‑10°</div>
+        <div class="pitch-line" style="top:80%;">‑20°</div>
     </div>
 
-    <!-- Playback Controls -->
+    <!-- Timeline Controls -->
     <section id="timeline-controls">
         <h2>Timeline Controls</h2>
         <button id="btnPlay">Play</button>
