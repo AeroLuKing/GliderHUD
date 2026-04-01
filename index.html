@@ -4,69 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glider Flight Project HUD Simulator</title>
-
-    <!-- Path matches /css/style.css -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <header><h1>Glider Flight Project HUD Simulator</h1></header>
+    <main>
+        <section id="upload-section">
+            <h2>1. Upload Your Flight JSON</h2>
+            <input type="file" id="fileInput" accept=".json">
+        </section>
 
-<header>
-    <h1>Glider Flight Project HUD Simulator</h1>
-</header>
+        <section id="hud-elements">
+            <div id="hud-alt" class="hud-element">Altitude: --- ft</div>
+            <div id="hud-g" class="hud-element">G‑Load: --- G</div>
+            <div id="hud-gs" class="hud-element">GS: --- mph</div>
+            <div id="hud-roll" class="hud-element">Roll: ---°</div>
+            <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
+            <div id="hud-head" class="hud-element">Heading: ---°</div>
+        </section>
 
-<main>
-    <!-- Upload Section -->
-    <section id="upload-section">
-        <h2>Upload Your Flight JSON</h2>
-        <input type="file" id="fileInput" accept=".json">
-    </section>
+        <div id="canvas-container" style="width: 100%; height: 400px; background: #111;"></div>
 
-    <!-- HUD Values -->
-    <section id="hud-elements">
-        <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
-        <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
-        <div id="hud-gs"    class="hud-element">GS: --- mph</div>
-        <div id="hud-roll"  class="hud-element">Roll: ---°</div>
-        <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
-        <div id="hud-head"  class="hud-element">Heading: ---°</div>
-    </section>
+        <div id="attitude-indicator">
+            <div id="bank-pointer"></div>
+            <div id="ai-wings"></div>
+            <div class="pitch-line" style="top:20%;">+20°</div>
+            <div class="pitch-line" style="top:30%;">+10°</div>
+            <div class="pitch-line" style="top:50%;">0°</div>
+            <div class="pitch-line" style="top:70%;">‑10°</div>
+            <div class="pitch-line" style="top:80%;">‑20°</div>
+        </div>
 
-    <!-- 3D Canvas -->
-    <div id="canvas-container"></div>
+        <section id="timeline-controls">
+            <h2>2. Timeline Controls</h2>
+            <button id="btnPlay">Play</button>
+            <button id="btnPause">Pause</button>
+            <button id="btnResetCam">Center Camera</button>
+            <input type="range" id="slider" min="0" max="1" value="0">
+            <span id="timeDisplay">00:00.00</span>
+        </section>
+    </main>
 
-    <!-- Attitude Indicator -->
-    <div id="attitude-indicator">
-        <div id="bank-pointer"></div>
-        <div id="ai-wings"></div>
-
-        <div class="pitch-line" style="top:20%;">+20°</div>
-        <div class="pitch-line" style="top:30%;">+10°</div>
-        <div class="pitch-line" style="top:50%;">0°</div>
-        <div class="pitch-line" style="top:70%;">‑10°</div>
-        <div class="pitch-line" style="top:80%;">‑20°</div>
-    </div>
-
-    <!-- Timeline Controls -->
-    <section id="timeline-controls">
-        <h2>Timeline Controls</h2>
-        <button id="btnPlay">Play</button>
-        <button id="btnPause">Pause</button>
-        <input type="range" id="slider" min="0" max="1" value="0">
-        <span id="timeDisplay">00:00.00</span>
-    </section>
-</main>
-
-<!-- SCRIPTS AT THE BOTTOM -->
-
-<!-- 1. Load Three.js r121 (Required for THREE.Geometry support) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-
-<!-- 2. Load your JSON loader logic -->
-<script src="js/loadFlight.js"></script>
-
-<!-- 3. Load your main app logic -->
-<script src="js/app.js"></script>
-
+    <!-- Use r121 to support your old THREE.Geometry code -->
+    <script src="https://cloudflare.com"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
