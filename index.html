@@ -8,13 +8,13 @@
     <!-- Correct CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Local Three.js (REQUIRED FIX) -->
+    <!-- Local Three.js -->
     <script src="js/three.min.js"></script>
 
-    <!-- Load Flight JSON Parser -->
+    <!-- JSON Loader -->
     <script src="js/loadFlight.js"></script>
 
-    <!-- Main HUD & WebGL App -->
+    <!-- Main App -->
     <script src="js/app.js"></script>
 </head>
 
@@ -34,23 +34,22 @@
 
     <!-- HUD Values -->
     <section id="hud-elements">
-        <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
-        <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
-        <div id="hud-gs"    class="hud-element">GS: --- mph</div>
-        <div id="hud-roll"  class="hud-element">Roll: ---°</div>
+        <div id="hud-alt" class="hud-element">Altitude: --- ft</div>
+        <div id="hud-g" class="hud-element">G‑Load: --- G</div>
+        <div id="hud-gs" class="hud-element">GS: --- mph</div>
+        <div id="hud-roll" class="hud-element">Roll: ---°</div>
         <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
-        <div id="hud-head"  class="hud-element">Heading: ---°</div>
+        <div id="hud-head" class="hud-element">Heading: ---°</div>
     </section>
 
-    <!-- WebGL Canvas -->
+    <!-- 3D Canvas -->
     <div id="canvas-container"></div>
 
-    <!-- Mini Attitude Indicator -->
+    <!-- Attitude Indicator -->
     <div id="attitude-indicator">
         <div id="bank-pointer"></div>
         <div id="ai-wings"></div>
 
-        <!-- Pitch ladder -->
         <div class="pitch-line" style="top:20%;">+20°</div>
         <div class="pitch-line" style="top:30%;">+10°</div>
         <div class="pitch-line" style="top:50%;">0°</div>
