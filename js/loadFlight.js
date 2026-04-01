@@ -1,21 +1,37 @@
-function loadFlightFiles(fileInput) {
-    const fileReader = new FileReader();
+//
+// loadFlight.js
+// Reads the student's flight.json file and passes the parsed data to app.js
+//
 
-    fileReader.onload = function(event) {
+function loadFlightJSON(file, callback) {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
         try {
-            // Parse the JSON data
             const data = JSON.parse(event.target.result);
-            console.log('Flight data loaded:', data);
-            // You can add additional logic to handle the loaded data
-        } catch (error) {
-            console.error('Error parsing JSON:', error);
+
+            console.log("Flight JSON loaded:", data);
+
+            // Required fields for your HUD simulator
+            const required = ["time","roll","pitch","heading","lat","lon","alt","gload","speed"];
+            for (let key of required) {
+                if (!data[key]) {
+                    console.warn(`Warning: Missing field in JSON: ${key}`);
+                }
+            }
+
+            callback(data);
+
+        } catch (e) {
+            console.error("JSON parsing error:", e);
+            alert("Error: File is not valid JSON flight data.");
         }
     };
 
-    fileReader.onerror = function(event) {
-        console.error('Error reading file:', event);
+    reader.onerror = function (event) {
+        console.error("File read error:", event);
+        alert("Error reading file.");
     };
 
-    // Read the file as text
-    fileReader.readAsText(fileInput);
+    reader.readAsText(file);
 }
