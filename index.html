@@ -8,66 +8,65 @@
     <!-- Correct CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Three.js From CDN -->
+    <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
 
     <!-- Load Flight JSON Helper -->
     <script src="js/loadFlight.js"></script>
 
-    <!-- Main HUD & WebGL Logic -->
+    <!-- Main WebGL HUD Logic -->
     <script src="js/app.js"></script>
 </head>
 
 <body>
 
-    <header>
-        <h1>Glider Flight Project HUD Simulator</h1>
-    </header>
+<header>
+    <h1>Glider Flight Project HUD Simulator</h1>
+</header>
 
-    <main>
+<main>
 
-        <!-- Upload Section -->
-        <section id="upload-section">
-            <h2>Upload Your Flight JSON</h2>
-            <input type="file" id="fileInput" accept=".json">
-        </section>
+    <!-- Upload Section -->
+    <section id="upload-section">
+        <h2>Upload Your Flight JSON</h2>
+        <input type="file" id="fileInput" accept=".json">
+    </section>
 
-        <!-- HUD Values -->
-        <section id="hud-elements">
-            <div id="hud-alt" class="hud-element">Altitude: --- ft</div>
-            <div id="hud-g" class="hud-element">G‑Load: --- G</div>
-            <div id="hud-gs" class="hud-element">GS: --- mph</div>
-            <div id="hud-roll" class="hud-element">Roll: ---°</div>
-            <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
-            <div id="hud-head" class="hud-element">Heading: ---°</div>
-        </section>
+    <!-- HUD Elements -->
+    <section id="hud-elements">
+        <div id="hud-alt" class="hud-element">Altitude: --- ft</div>
+        <div id="hud-g" class="hud-element">G‑Load: --- G</div>
+        <div id="hud-gs" class="hud-element">GS: --- mph</div>
+        <div id="hud-roll" class="hud-element">Roll: ---°</div>
+        <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
+        <div id="hud-head" class="hud-element">Heading: ---°</div>
+    </section>
 
-        <!-- WebGL Canvas -->
-        <div id="canvas-container"></div>
+    <!-- 3D Canvas -->
+    <div id="canvas-container"></div>
 
-        <!-- Mini Attitude Indicator -->
-        <div id="attitude-indicator">
-            <div id="bank-pointer"></div>
-            <div id="ai-wings"></div>
+    <!-- Attitude Indicator -->
+    <div id="attitude-indicator">
+        <div id="bank-pointer"></div>
+        <div id="ai-wings"></div>
 
-            <!-- Pitch ladder -->
-            <div class="pitch-line" style="top:20%;">+20°</div>
-            <div class="pitch-line" style="top:30%;">+10°</div>
-            <div class="pitch-line" style="top:50%;">0°</div>
-            <div class="pitch-line" style="top:70%;">‑10°</div>
-            <div class="pitch-line" style="top:80%;">‑20°</div>
-        </div>
+        <div class="pitch-line" style="top:20%;">+20°</div>
+        <div class="pitch-line" style="top:30%;">+10°</div>
+        <div class="pitch-line" style="top:50%;">0°</div>
+        <div class="pitch-line" style="top:70%;">-10°</div>
+        <div class="pitch-line" style="top:80%;">-20°</div>
+    </div>
 
-        <!-- Playback Controls -->
-        <section id="timeline-controls">
-            <h2>Timeline Controls</h2>
-            <button id="btnPlay">Play</button>
-            <button id="btnPause">Pause</button>
-            <input type="range" id="slider" min="0" max="1" value="0">
-            <span id="timeDisplay">00:00.00</span>
-        </section>
+    <!-- Playback Controls -->
+    <section id="timeline-controls">
+        <h2>Timeline Controls</h2>
+        <button id="btnPlay">Play</button>
+        <button id="btnPause">Pause</button>
+        <input type="range" id="slider" min="0" max="1" value="0">
+        <span id="timeDisplay">00:00.00</span>
+    </section>
 
-    </main>
+</main>
 
 </body>
 </html>
