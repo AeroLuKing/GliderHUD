@@ -1,7 +1,6 @@
 //
 // app.js — Web HUD & ASK‑21 3D Simulator
-// NO ES6 imports (GitHub Pages compatible)
-// Works with Three.js loaded via CDN
+// Fixed: Integrated JSON loading to prevent "undefined" errors
 //
 
 let scene, camera, renderer;
@@ -11,13 +10,9 @@ let frame = 0;
 let N = 0;
 let playing = false;
 
-// Earth radius (meters)
 const R_EARTH = 6378137;
-
-// Convert degrees → radians
 const rad = (a) => a * Math.PI / 180;
 
-// Convert lat/lon to local N/E coordinates
 function latLonToNE(lat0, lon0, lat, lon) {
     let dLat = rad(lat - lat0);
     let dLon = rad(lon - lon0);
@@ -27,12 +22,9 @@ function latLonToNE(lat0, lon0, lat, lon) {
     };
 }
 
-// ---------------------------------------------
-// INITIALIZE THREE.JS
-// ---------------------------------------------
 function initScene() {
-
     const container = document.getElementById("canvas-container");
+    if (!container) return;
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -41,15 +33,11 @@ function initScene() {
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(
-        60,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        20000
-    );
+    camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 20000);
     camera.position.set(0, -40, 15);
+    camera.lookAt(0, 0, 0);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambient);
 
     const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -57,165 +45,110 @@ function initScene() {
     scene.add(light);
 }
 
-// ---------------------------------------------
-// LOAD ASK‑21 3D MODEL
-// ---------------------------------------------
 function loadGlider(callback) {
-
     fetch("models/ask21.json")
         .then(r => r.json())
         .then(data => {
-
+            // Using THREE.Geometry for compatibility with Three.js r121
             const geom = new THREE.Geometry();
-
-            data.vertices.forEach(v =>
-                geom.vertices.push(new THREE.Vector3(v[0], v[1], v[2]))
-            );
-
-            data.faces.forEach(f =>
-                geom.faces.push(new THREE.Face3(f[0]-1, f[1]-1, f[2]-1))
-            );
-
+            data.vertices.forEach(v => geom.vertices.push(new THREE.Vector3(v[0], v[1], v[2])));
+            data.faces.forEach(f => geom.faces.push(new THREE.Face3(f[0]-1, f[1]-1, f[2]-1)));
+            
             geom.computeFaceNormals();
+            geom.computeVertexNormals();
 
-            const mat = new THREE.MeshStandardMaterial({
-                color: 0xffffff,
-                roughness: 1.0,
-                metalness: 0.0
-            });
-
+            const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5, metalness: 0.2 });
             glider = new THREE.Mesh(geom, mat);
             scene.add(glider);
-
-            callback();
-        });
+            if (callback) callback();
+        })
+        .catch(err => console.error("Model load error:", err));
 }
 
 // ---------------------------------------------
-// LOAD STUDENT FLIGHT DATA
+// FIXED: Integrated JSON Reader
 // ---------------------------------------------
-function loadFlightData(data) {
-    flight = data;
-    N = flight.time.length;
-    frame = 0;
-
-    document.getElementById("slider").max = N - 1;
+function handleFileUpload(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            flight = data;
+            N = flight.time.length;
+            frame = 0;
+            document.getElementById("slider").max = N - 1;
+            console.log("Flight data loaded successfully.");
+        } catch (err) {
+            console.error("JSON Parse Error:", err);
+            alert("Error parsing flight JSON. Check file format.");
+        }
+    };
+    reader.readAsText(file);
 }
 
-// ---------------------------------------------
-// UPDATE HUD TEXT
-// ---------------------------------------------
 function updateHUD(k) {
+    if (!flight) return;
+    document.getElementById("hud-alt").textContent = `Altitude: ${flight.alt[k].toFixed(0)} ft`;
+    document.getElementById("hud-g").textContent = `G‑Load: ${flight.gload[k].toFixed(2)}`;
+    document.getElementById("hud-gs").textContent = `GS: ${(flight.speed[k] * 2.23694).toFixed(1)} mph`;
+    document.getElementById("hud-roll").textContent = `Roll: ${flight.roll[k].toFixed(1)}°`;
+    document.getElementById("hud-pitch").textContent = `Pitch: ${flight.pitch[k].toFixed(1)}°`;
+    document.getElementById("hud-head").textContent = `Heading: ${flight.heading[k].toFixed(1)}°`;
 
-    document.getElementById("hud-alt").textContent =
-        `Altitude: ${flight.alt[k].toFixed(0)} ft`;
-
-    document.getElementById("hud-g").textContent =
-        `G‑Load: ${flight.gload[k].toFixed(2)}`;
-
-    document.getElementById("hud-gs").textContent =
-        `GS: ${(flight.speed[k] * 2.23694).toFixed(1)} mph`;
-
-    document.getElementById("hud-roll").textContent =
-        `Roll: ${flight.roll[k].toFixed(1)}°`;
-
-    document.getElementById("hud-pitch").textContent =
-        `Pitch: ${flight.pitch[k].toFixed(1)}°`;
-
-    document.getElementById("hud-head").textContent =
-        `Heading: ${flight.heading[k].toFixed(1)}°`;
-
-    // Time display (MM:SS.ss)
     const t = flight.time[k];
     const min = Math.floor(t / 60);
     const sec = (t - min * 60).toFixed(2);
-
-    document.getElementById("timeDisplay").textContent =
-        `${String(min).padStart(2,'0')}:${String(sec).padStart(5,'0')}`;
+    document.getElementById("timeDisplay").textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(5,'0')}`;
 }
 
-// ---------------------------------------------
-// UPDATE ATTITUDE INDICATOR
-// ---------------------------------------------
 function updateAI(k) {
-    const roll = flight.roll[k];
-    const pitch = flight.pitch[k];
-
-    // Yellow roll pointer rotates
-    document.getElementById("bank-pointer").style.transform =
-        `rotate(${roll}deg)`;
-
-    // Yellow wings shift up/down (pitch)
-    document.getElementById("ai-wings").style.transform =
-        `translateY(${-(pitch * 2)}px)`;
+    if (!flight) return;
+    document.getElementById("bank-pointer").style.transform = `rotate(${flight.roll[k]}deg)`;
+    document.getElementById("ai-wings").style.transform = `translateY(${-(flight.pitch[k] * 2)}px)`;
 }
 
-// ---------------------------------------------
-// UPDATE GLIDER 3D MODEL
-// ---------------------------------------------
 function updateGlider(k) {
-    if (!glider) return;
-
+    if (!glider || !flight) return;
     glider.rotation.x = rad(flight.pitch[k]);
     glider.rotation.y = rad(-flight.heading[k]);
     glider.rotation.z = rad(-flight.roll[k]);
 
-    const NE = latLonToNE(
-        flight.lat[0], flight.lon[0],
-        flight.lat[k], flight.lon[k]
-    );
-
-    glider.position.set(
-        NE.N / 10,
-        NE.E / 10,
-        flight.alt[k] / 10
-    );
+    const NE = latLonToNE(flight.lat[0], flight.lon[0], flight.lat[k], flight.lon[k]);
+    glider.position.set(NE.N / 10, NE.E / 10, flight.alt[k] / 10);
 }
 
-// ---------------------------------------------
-// MAIN ANIMATION LOOP
-// ---------------------------------------------
 function animate() {
     requestAnimationFrame(animate);
-
     if (flight) {
         updateGlider(frame);
         updateHUD(frame);
         updateAI(frame);
+        if (playing && frame < N - 1) {
+            frame++;
+            document.getElementById("slider").value = frame;
+        } else if (frame >= N - 1) {
+            playing = false;
+        }
     }
-
     renderer.render(scene, camera);
-
-    if (playing) {
-        frame = Math.min(frame + 1, N - 1);
-        document.getElementById("slider").value = frame;
-    }
 }
 
-// ---------------------------------------------
-// UI SETUP
-// ---------------------------------------------
 function setupUI() {
-
-    document.getElementById("slider").oninput = function () {
+    const slider = document.getElementById("slider");
+    slider.oninput = function () {
         frame = parseInt(this.value);
         playing = false;
     };
-
-    document.getElementById("btnPlay").onclick = () => playing = true;
-
+    document.getElementById("btnPlay").onclick = () => { if(flight) playing = true; };
     document.getElementById("btnPause").onclick = () => playing = false;
-
-    // File upload
+    
     document.getElementById("fileInput").addEventListener("change", function(evt) {
-        if (evt.target.files.length === 0) return;
-        loadFlightJSON(evt.target.files[0], loadFlightData);
+        if (evt.target.files.length > 0) {
+            handleFileUpload(evt.target.files[0]);
+        }
     });
 }
 
-// ---------------------------------------------
-// ENTRY POINT
-// ---------------------------------------------
 window.onload = function () {
     initScene();
     setupUI();
