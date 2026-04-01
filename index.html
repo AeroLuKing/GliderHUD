@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glider Flight Project HUD Simulator</title>
 
-    <!-- Correct CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Correct CSS path -->
+    css/style.css
 
-    <!-- Three.js CDN - FULLY CORRECT SCRIPT TAG -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
+    <!-- Three.js from CDN -->
+    https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js
 
-    <!-- Load Flight JSON helper -->
-    <script src="js/loadFlight.js"></script>
+    <!-- Flight JSON loader -->
+    js/loadFlight.js</script>
 
-    <!-- Main WebGL HUD App -->
+    <!-- Main WebGL HUD application -->
     <script src="js/app.js"></script>
 </head>
 
@@ -30,20 +30,19 @@
         <section id="upload-section">
             <h2>Upload Your Flight JSON</h2>
             <input type="file" id="fileInput" accept=".json">
-            <label id="uploadLabel" for="fileInput">Choose Flight File</label>
         </section>
 
-        <!-- HUD Values -->
+        <!-- HUD Elements -->
         <section id="hud-elements">
-            <div class="hud-element" id="hud-alt">Altitude: --- ft</div>
-            <div class="hud-element" id="hud-g">G-Load: --- G</div>
-            <div class="hud-element" id="hud-gs">GS: --- mph</div>
-            <div class="hud-element" id="hud-roll">Roll: ---°</div>
-            <div class="hud-element" id="hud-pitch">Pitch: ---°</div>
-            <div class="hud-element" id="hud-head">Heading: ---°</div>
+            <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
+            <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
+            <div id="hud-gs"    class="hud-element">GS: --- mph</div>
+            <div id="hud-roll"  class="hud-element">Roll: ---°</div>
+            <div id="hud-pitch" class="hud-element">Pitch: ---°</div>
+            <div id="hud-head"  class="hud-element">Heading: ---°</div>
         </section>
 
-        <!-- Three.js Rendering Area -->
+        <!-- WebGL Canvas -->
         <div id="canvas-container"></div>
 
         <!-- Mini Attitude Indicator -->
@@ -51,11 +50,12 @@
             <div id="bank-pointer"></div>
             <div id="ai-wings"></div>
 
+            <!-- Static pitch ladder text -->
             <div class="pitch-line" style="top:20%;">+20°</div>
             <div class="pitch-line" style="top:30%;">+10°</div>
             <div class="pitch-line" style="top:50%;">0°</div>
-            <div class="pitch-line" style="top:70%;">-10°</div>
-            <div class="pitch-line" style="top:80%;">-20°</div>
+            <div class="pitch-line" style="top:70%;">‑10°</div>
+            <div class="pitch-line" style="top:80%;">‑20°</div>
         </div>
 
         <!-- Playback Controls -->
@@ -66,8 +66,8 @@
             <input type="range" id="slider" min="0" max="1" value="0">
             <span id="timeDisplay">00:00.00</span>
         </section>
-
     </main>
 
 </body>
 </html>
+``
