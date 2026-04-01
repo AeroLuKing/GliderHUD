@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glider Flight Project HUD Simulator</title>
 
-    <!-- Correct CSS -->
+    <!-- Path matches /css/style.css -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -16,13 +16,11 @@
 </header>
 
 <main>
-    <!-- Upload Section -->
     <section id="upload-section">
         <h2>Upload Your Flight JSON</h2>
         <input type="file" id="fileInput" accept=".json">
     </section>
 
-    <!-- HUD Values -->
     <section id="hud-elements">
         <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
         <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
@@ -32,14 +30,11 @@
         <div id="hud-head"  class="hud-element">Heading: ---°</div>
     </section>
 
-    <!-- 3D Canvas -->
     <div id="canvas-container"></div>
 
-    <!-- Attitude Indicator -->
     <div id="attitude-indicator">
         <div id="bank-pointer"></div>
         <div id="ai-wings"></div>
-
         <div class="pitch-line" style="top:20%;">+20°</div>
         <div class="pitch-line" style="top:30%;">+10°</div>
         <div class="pitch-line" style="top:50%;">0°</div>
@@ -47,7 +42,6 @@
         <div class="pitch-line" style="top:80%;">‑20°</div>
     </div>
 
-    <!-- Timeline Controls -->
     <section id="timeline-controls">
         <h2>Timeline Controls</h2>
         <button id="btnPlay">Play</button>
@@ -58,11 +52,13 @@
 </main>
 
 <!-- SCRIPTS AT THE BOTTOM -->
-<!-- Load Three.js from CDN to fix the "THREE is not defined" error -->
-<script src="https://cloudflare.com"></script>
+<!-- 1. Load Three.js -->
+<script src="js/three.min.js"></script>
 
-<!-- Your local scripts -->
+<!-- 2. Load JSON helper -->
 <script src="js/loadFlight.js"></script>
+
+<!-- 3. Load main logic -->
 <script src="js/app.js"></script>
 
 </body>
