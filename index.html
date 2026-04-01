@@ -3,13 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GliderHUD</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Glider Flight Project HUD Simulator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to GliderHUD</h1>
-    <script src="js/three.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/loadFlight.js"></script>
+    <header>
+        <h1>Glider Flight Project HUD Simulator</h1>
+    </header>
+    <main>
+        <section id="upload-section">
+            <h2>Upload Your Flight Data</h2>
+            <input type="file" id="file-upload" />
+            <button id="upload-button">Upload</button>
+        </section>
+        <section id="hud-elements">
+            <div class="hud-element" id="altitude">Altitude: <span id="altitude-value">0</span> ft</div>
+            <div class="hud-element" id="g-load">G-Load: <span id="g-load-value">0</span> G</div>
+            <div class="hud-element" id="airspeed">Airspeed: <span id="airspeed-value">0</span> knots</div>
+            <div class="hud-element" id="roll">Roll: <span id="roll-value">0</span> degrees</div>
+            <div class="hud-element" id="pitch">Pitch: <span id="pitch-value">0</span> degrees</div>
+            <div class="hud-element" id="heading">Heading: <span id="heading-value">0</span> degrees</div>
+        </section>
+        <section id="attitude-indicator">
+            <h2>Attitude Indicator</h2>
+            <div id="pitch-ladder">Pitch Ladder</div>
+            <div id="attitude-display"></div>
+        </section>
+        <section id="timeline-controls">
+            <h2>Timeline Controls</h2>
+            <button id="play-button">Play</button>
+            <button id="pause-button">Pause</button>
+            <input type="range" id="timeline-slider" min="0" max="100" value="0" />
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
