@@ -16,11 +16,13 @@
 </header>
 
 <main>
+    <!-- Upload Section -->
     <section id="upload-section">
         <h2>Upload Your Flight JSON</h2>
         <input type="file" id="fileInput" accept=".json">
     </section>
 
+    <!-- HUD Values -->
     <section id="hud-elements">
         <div id="hud-alt"   class="hud-element">Altitude: --- ft</div>
         <div id="hud-g"     class="hud-element">G‑Load: --- G</div>
@@ -30,11 +32,14 @@
         <div id="hud-head"  class="hud-element">Heading: ---°</div>
     </section>
 
+    <!-- 3D Canvas -->
     <div id="canvas-container"></div>
 
+    <!-- Attitude Indicator -->
     <div id="attitude-indicator">
         <div id="bank-pointer"></div>
         <div id="ai-wings"></div>
+
         <div class="pitch-line" style="top:20%;">+20°</div>
         <div class="pitch-line" style="top:30%;">+10°</div>
         <div class="pitch-line" style="top:50%;">0°</div>
@@ -42,6 +47,7 @@
         <div class="pitch-line" style="top:80%;">‑20°</div>
     </div>
 
+    <!-- Timeline Controls -->
     <section id="timeline-controls">
         <h2>Timeline Controls</h2>
         <button id="btnPlay">Play</button>
@@ -51,14 +57,15 @@
     </section>
 </main>
 
-<!-- SCRIPTS AT THE BOTTOM -->
-<!-- 1. Load Three.js -->
-<script src="js/three.min.js"></script>
+<!-- SCRIPTS AT THE BOTTOM (Correct loading order) -->
 
-<!-- 2. Load JSON helper -->
+<!-- 1. Verified Three.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- 2. Your JSON loader logic -->
 <script src="js/loadFlight.js"></script>
 
-<!-- 3. Load main logic -->
+<!-- 3. Your main app logic -->
 <script src="js/app.js"></script>
 
 </body>
