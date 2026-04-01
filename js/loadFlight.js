@@ -1,37 +1,37 @@
-//
-// loadFlight.js
-// Reads the student's flight.json file and passes the parsed data to app.js
-//
+function loadGlider(callback) {
 
-function loadFlightJSON(file, callback) {
-    const reader = new FileReader();
+    fetch("models/ask21.json")
+        .then(r => r.json())
+        .then(data => {
 
-    reader.onload = function (event) {
-        try {
-            const data = JSON.parse(event.target.result);
+            // Convert vertices to a flat typed array
+            const verts = [];
+            data.vertices.forEach(v => verts.push(v[0], v[1], v[2]));
 
-            console.log("Flight JSON loaded:", data);
+            // Convert faces to flat index list
+            const indices = [];
+            data.faces.forEach(f => {
+                indices.push(f[0] - 1, f[1] - 1, f[2] - 1);
+            });
 
-            // Required fields for your HUD simulator
-            const required = ["time","roll","pitch","heading","lat","lon","alt","gload","speed"];
-            for (let key of required) {
-                if (!data[key]) {
-                    console.warn(`Warning: Missing field in JSON: ${key}`);
-                }
-            }
+            // Create BufferGeometry
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute(
+                'position',
+                new THREE.Float32BufferAttribute(verts, 3)
+            );
+            geom.setIndex(indices);
+            geom.computeVertexNormals();
 
-            callback(data);
+            const mat = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                roughness: 1.0,
+                metalness: 0.0
+            });
 
-        } catch (e) {
-            console.error("JSON parsing error:", e);
-            alert("Error: File is not valid JSON flight data.");
-        }
-    };
+            glider = new THREE.Mesh(geom, mat);
+            scene.add(glider);
 
-    reader.onerror = function (event) {
-        console.error("File read error:", event);
-        alert("Error reading file.");
-    };
-
-    reader.readAsText(file);
+            callback();
+        });
 }
