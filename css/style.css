@@ -1,0 +1,80 @@
+.hud {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+
+.canvas-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hud-element {
+    position: absolute;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+}
+
+.controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.control-button {
+    padding: 10px 15px;
+    background: #444;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.control-button:hover {
+    background: #666;
+}
+
+.attitude-indicator {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attitude-indicator .bar {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+}
+
+.attitude-indicator .bar.horizontal {
+    transform: translateY(-50%);
+}
+
+.attitude-indicator .bar.vertical {
+    transform: translateX(-50%);
+}
